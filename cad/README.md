@@ -1,4 +1,24 @@
-# CAD: web shooter v0 (concept)
+# CAD
+
+## v1: minimal (current)
+
+[`webshooter_v1.py`](webshooter_v1.py), based on the [early Tinkercad prototype](reference/README.md). A low spine on two slim C-bands: nozzles + valves at the wrist, a round 1.28" screen with the electronics underneath, and twin capsules behind.
+
+- `stl/v1_wrist_unit.stl`: the whole wrist unit, one print (print standing on its rear end)
+- `stl/v1_palm_pad.stl`: palm trigger pad
+- 16 mm tall above the band, 124 mm long, ~57 cm³ of plastic
+
+![v1](preview/v1_views.png)
+
+```bash
+python webshooter_v1.py
+```
+
+**Capsules: use a sliding piston.** Each capsule has a piston that separates the fluid from the air or spring pushing it. That gives about twice the string per refill (the pressure stays steadier), and it works pointed in any direction. With plain air above the fluid, aiming upward would spray air.
+
+---
+
+## v0: concept (superseded)
 
 The 3D model is **code**: [`webshooter_cad.py`](webshooter_cad.py) uses [CadQuery](https://cadquery.readthedocs.io/). Every dimension is a named parameter at the top of the file, so you can change your wrist size, capsule size and so on, then regenerate all the parts.
 
