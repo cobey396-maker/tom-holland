@@ -36,3 +36,5 @@ build-log/   dated entries: what was tried, what happened, photos/videos
 - [Brainstorm & open questions](docs/brainstorm.md)
 - [Safety](docs/safety.md)
 - [Parts list](docs/parts-list.md)
+- [Physics simulator](analysis/simulate/README.md): what pressure, nozzle and capsule size actually do
+- [3D model](cad/README.md): parametric CAD, STL files ready for the makerspace

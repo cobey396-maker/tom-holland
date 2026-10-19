@@ -3,12 +3,13 @@
 Target: working demo by **mid-November 2026**.
 
 ## Phase 0 — $0, start now
-- [ ] Brainstorm and decide core design questions ([brainstorm.md](brainstorm.md))
+- [x] Brainstorm and decide core design questions ([brainstorm.md](brainstorm.md))
 - [ ] Email 2–3 NCAT faculty (chemistry / chemical engineering / bioengineering) about lab access for Phase 4
 - [ ] Ask the makerspace if they stock free/consumable parts (syringes, electronics, filament)
-- [ ] Python simulation: jet trajectory + range vs. pressure and needle size
+- [x] Python simulation: jet speed, force, range, capsule pressure, soda-can model
 - [ ] Write pump/trigger firmware and test it in the free [Wokwi](https://wokwi.com) ESP32 simulator
-- [ ] Sketch the wrist housing in Tinkercad or Onshape (both free)
+- [x] Wrist housing v0 (parametric CadQuery model, STL + STEP)
+- [ ] Measure wrist, update CAD, print a fit-test ring at the makerspace
 - [ ] Build the video-analysis script and test it on sample footage
 
 ## Phase 1 — bench rig (~$35)
