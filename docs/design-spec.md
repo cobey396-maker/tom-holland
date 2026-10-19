@@ -1,5 +1,10 @@
 # Design spec (v0 — dream design)
 
+## Decisions (2026-10-19)
+- **Two modes:** tap = impact shot, hold = string. ✅
+- **Refill port**, not swappable capsules. ✅
+- **Web lifetime: 3–5 minutes**, then it dissolves. Tether pull window ≈ first 1–2 min. ✅
+
 ## Requirements
 | # | Requirement | Status |
 |---|---|---|
@@ -48,6 +53,18 @@ To get ~1 N (roughly what tips a full soda can) with a water-like fluid:
 | Hybrid: gel coated on a water-soluble (PVA) thread | strongest, and the thread dissolves in water too. Stretch goal |
 
 **Dissolve vs. pull:** strength drops as the fiber breaks down, so the dissolve timer must leave a usable window (e.g. strong for the first few minutes). Measuring strength over time is a key experiment.
+
+## Refill port
+- Each capsule: **luer-lock fill port with a one-way check valve** (refill with a plain syringe) + a **Schrader valve** (the bike-tire valve) to pressurize with any bike pump.
+- **Bleed valve** to vent pressure before refilling; firmware/LED should warn if pressurized.
+- **Pressure-relief valve** set ~40 psi so a bike pump can't over-pressurize it.
+
+## Dissolving in 3–5 minutes
+Enzymes (option C below) are probably too slow for minutes. Faster candidate:
+- **Built-in citrate timer:** add a small, tuned amount of **sodium citrate** to the core fluid. The calcium-rich sheath gels the outside instantly; then the citrate slowly pulls calcium back out of the gel and it softens and falls apart. More citrate means faster dissolving, and too much means it never forms. Finding the sweet spot is the experiment.
+- Fallback: weakly cross-linked gel (less calcium) that slumps and breaks within minutes.
+
+**Test plan:** sweep citrate amount → measure (a) does a fiber form, (b) pull strength at 0/1/2 min, (c) time until it breaks or dissolves. Automate (c) with a phone timelapse + OpenCV detecting when the strand breaks.
 
 ## Dissolving (R8): options
 | Option | How | Difficulty |
