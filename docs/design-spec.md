@@ -11,6 +11,7 @@
 | R6 | **String mode:** hold = continuous strand, release = strand ends | design |
 | R7 | Fluid → hardened, silky fiber in mid-air | Phase 1 (alginate), Phase 4 (silk) |
 | R8 | **Dissolves over time** after being shot | research |
+| R9 | **Tether mode:** second button keeps the string attached to the wrist so you can pull things before it dissolves | design |
 | — | ~~Push someone's hand back~~ | **Dropped:** see Safety. Never aimed at people. |
 
 ## Rough physics (to be refined by `analysis/simulate`)
@@ -30,6 +31,23 @@ To get ~1 N (roughly what tips a full soda can) with a water-like fluid:
 - **Pinch valves** on silicone tubing (fluid never touches the valve → fewer clogs), driven by the ESP32
 - Palm switch → ESP32 → opens valves while held; on release closes valves, optional suck-back to clear the tip
 - Arm/safe switch must be on before anything fires
+
+## Tether mode (R9)
+**Controls:** palm switch fires. A second button (thumb or side of index finger) picks what happens on release:
+- Release palm only → valves close, string breaks off (normal)
+- Hold tether button while releasing → a small motorized hook/spool at the nozzle catches and winds the string end, anchoring it to the wrist
+
+**Pulling:** pull with your arm, or let the spool reel it in (reel speed + motor current gives a rough pull-force reading).
+
+**Strength reality check (estimates, to be measured):**
+| Fiber | Rough pull capacity (1 mm strand) |
+|---|---|
+| Wet alginate gel | tens of grams: paper, a pen, a phone charger |
+| Alginate + chitosan / multiple strands | more; to be tested |
+| Silk + dopamine + chitosan (Phase 4) | much stronger per weight |
+| Hybrid: gel coated on a water-soluble (PVA) thread | strongest, and the thread dissolves in water too. Stretch goal |
+
+**Dissolve vs. pull:** strength drops as the fiber breaks down, so the dissolve timer must leave a usable window (e.g. strong for the first few minutes). Measuring strength over time is a key experiment.
 
 ## Dissolving (R8): options
 | Option | How | Difficulty |
