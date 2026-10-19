@@ -32,6 +32,7 @@ build-log/   dated entries: what was tried, what happened, photos/videos
 
 - [How it works](docs/how-it-works.md)
 - [Roadmap](docs/roadmap.md)
+- [Design spec (dream design)](docs/design-spec.md)
 - [Brainstorm & open questions](docs/brainstorm.md)
 - [Safety](docs/safety.md)
 - [Parts list](docs/parts-list.md)
