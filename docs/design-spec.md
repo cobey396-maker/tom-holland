@@ -38,7 +38,7 @@ To get ~1 N (roughly what tips a full soda can) with a water-like fluid:
 - Arm/safe switch must be on before anything fires
 
 ## Tether mode (R9)
-**Controls:** palm switch fires. A second button (thumb or side of index finger) picks what happens on release:
+**Controls:** a two-button palm pad (see `cad/README.md`): **FIRE** under the middle/ring fingers, **TETHER** next to it, recessed. Holding TETHER picks what happens on release:
 - Release palm only → valves close, string breaks off (normal)
 - Hold tether button while releasing → a small motorized hook/spool at the nozzle catches and winds the string end, anchoring it to the wrist
 

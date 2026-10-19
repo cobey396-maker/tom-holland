@@ -5,7 +5,12 @@
 [`webshooter_v1.py`](webshooter_v1.py), based on the [early Tinkercad prototype](reference/README.md). A low spine on two slim C-bands: nozzles + valves at the wrist, a round 1.28" screen with the electronics underneath, and twin capsules behind.
 
 - `stl/v1_wrist_unit.stl`: the whole wrist unit, one print (print standing on its rear end)
-- `stl/v1_palm_pad.stl`: palm trigger pad
+- `stl/v1_palm_pad.stl`: two-button palm pad, **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). Held by an elastic loop around the hand.
+- `stl/v1_cable_clip.stl`: clips onto the front band to guide the flat cable from the palm pad
+
+![palm pad](preview/v1_palm_pad.png)
+
+The buttons aren't on rigid arms: anything rigid crossing the wrist joint stops the wrist from bending. A thin flexible cable runs from the pad, under the wrist, to the band.
 - 16 mm tall above the band, 124 mm long, ~57 cm³ of plastic
 
 ![v1](preview/v1_views.png)

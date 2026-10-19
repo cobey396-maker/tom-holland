@@ -48,6 +48,18 @@ COAX_HOLE = 8.2
 IMPACT_HOLE = 7.2
 
 POD_FLOOR = 2.0
+BUTTON_POCKET_DEPTH = 3.6     # 12 x 12 x 3.5 mm tactile switch body
+
+# palm pad: two buttons side by side in the palm, like the early prototype's two round tips.
+# Held by an elastic loop around the hand; a thin flexible cable runs back to the band,
+# so the wrist can still bend freely.
+PALM_PAD = (48, 24, 7.5)      # length across the palm, width, thickness
+PALM_BUTTON = 12.3            # 12 mm tactile switches
+BUTTON_SPACING = 20
+TETHER_RECESS = 1.2           # tether button sits lower so it isn't pressed by accident
+LOOP_SLOT = (2.6, 16)         # elastic loop slots at each end
+CABLE = (6, 1.8)              # flat cable channel on the underside
+
 OUT = Path(__file__).parent
 
 
@@ -141,6 +153,43 @@ def pod():
     return body
 
 
+def palm_pad():
+    """Two-button palm pad: FIRE (tap = impact, hold = string) and TETHER."""
+    l, w, t = PALM_PAD
+    pad = (cq.Workplane("XY").slot2D(l, w).extrude(t)
+           .edges(">Z").fillet(2.2))
+    # FIRE: flush, under the middle/ring fingers
+    d = BUTTON_POCKET_DEPTH
+    fire = (cq.Workplane("XY").box(PALM_BUTTON, PALM_BUTTON, d + 1, centered=(True, True, False))
+            .translate((-BUTTON_SPACING / 2, 0, t - d)))
+    # TETHER: recessed, with a raised ring you can find by feel
+    tether = (cq.Workplane("XY").box(PALM_BUTTON, PALM_BUTTON, d + TETHER_RECESS + 1, centered=(True, True, False))
+              .translate((BUTTON_SPACING / 2, 0, t - d - TETHER_RECESS)))
+    ring = (cq.Workplane("XY").circle(PALM_BUTTON / 2 + 3).circle(PALM_BUTTON / 2 + 1.6).extrude(1.2)
+            .translate((BUTTON_SPACING / 2, 0, t)))
+    pad = pad.union(ring).cut(fire).cut(tether)
+    # wire holes from each button pocket down into the cable channel
+    for x in (-BUTTON_SPACING / 2, BUTTON_SPACING / 2):
+        pad = pad.cut(cq.Workplane("XY").circle(1.6).extrude(t).translate((x, 0, 0)))
+    # cable channel underneath, exiting toward the wrist (-Y)
+    channel = (cq.Workplane("XY").box(BUTTON_SPACING + CABLE[0], CABLE[0], CABLE[1], centered=(True, True, False))
+               .union(cq.Workplane("XY").box(CABLE[0], w, CABLE[1], centered=(True, False, False))
+                      .translate((0, -w, 0))))
+    pad = pad.cut(channel)
+    # elastic loop slots at both ends
+    for side in (-1, 1):
+        pad = pad.cut(cq.Workplane("XY").box(LOOP_SLOT[0], LOOP_SLOT[1], t * 3)
+                      .translate((side * (l / 2 - 4.5), 0, 0)))
+    return pad
+
+
+def cable_clip():
+    """Snaps onto the front band's edge to hold the palm cable."""
+    return (cq.Workplane("XY").box(10, 8, 4).cut(cq.Workplane("XY").box(10.2, CUFF_WALL + 0.3, 2.6)
+                                                  .translate((0, 0, -0.8)))
+            .cut(cq.Workplane("XY").box(CABLE[0] + 0.4, 9, CABLE[1] + 0.3).translate((0, 0, 1.2))))
+
+
 def unit():
     return cuff().union(pod())
 
@@ -150,11 +199,14 @@ def capsule_placeholder():
 
 
 def main():
-    from webshooter_cad import palm_pad
     u = unit()
     (OUT / "stl").mkdir(exist_ok=True)
     cq.exporters.export(u, str(OUT / "stl" / "v1_wrist_unit.stl"), tolerance=0.05)
-    cq.exporters.export(palm_pad(), str(OUT / "stl" / "v1_palm_pad.stl"), tolerance=0.05)
+    pad = palm_pad()
+    cq.exporters.export(pad, str(OUT / "stl" / "v1_palm_pad.stl"), tolerance=0.05)
+    cq.exporters.export(cable_clip(), str(OUT / "stl" / "v1_cable_clip.stl"), tolerance=0.05)
+    pb = pad.val().BoundingBox()
+    print(f"palm pad: {pb.xlen:.0f} x {pb.ylen:.0f} x {pb.zlen:.1f} mm, valid={pad.val().isValid()}")
     bb = u.val().BoundingBox()
     deck = WRIST_HEIGHT / 2 + CUFF_WALL
     print(f"wrist unit: {bb.xlen:.0f} x {bb.ylen:.0f} x {bb.zlen:.0f} mm, "
