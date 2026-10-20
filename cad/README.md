@@ -4,14 +4,12 @@
 
 [`webshooter_v1.py`](webshooter_v1.py), based on the [early Tinkercad prototype](reference/README.md). A low spine on two slim C-bands: nozzles + valves at the wrist, a round 1.28" screen with the electronics underneath, and twin capsules behind.
 
-- `stl/v1_wrist_unit.stl`: the whole wrist unit, one print (print standing on its rear end)
-- `stl/v1_palm_pad.stl`: two-button palm pad, **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). Held by an elastic loop around the hand.
-- `stl/v1_cable_clip.stl`: clips onto the front band to guide the flat cable from the palm pad
-
-![palm pad](preview/v1_palm_pad.png)
-
-The buttons aren't on rigid arms: anything rigid crossing the wrist joint stops the wrist from bending. A thin flexible cable runs from the pad, under the wrist, to the band.
-- 16 mm tall above the band, 124 mm long, ~57 cm³ of plastic
+- `stl/v1_wrist_unit.stl`: the whole thing, **one print**: bands, pod and palm trigger
+- **Palm trigger built in:** a thin flexible tongue runs from the underside of the front band to a two-button pad in your palm: **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). The tongue bends with your wrist like a spring (a *compliant mechanism*), so the buttons are part of the band without locking the wrist. An elastic loop through the pad's end slots keeps it against your palm.
+- The bands open on the **pinky side** (set `GAP_SIDE = -1` for the other arm), so the palm side is solid for the tongue.
+- 16 mm tall above the band, ~64 cm³ of plastic
+- **Print in PETG**, not PLA: the tongue flexes every time you bend your wrist, and PLA cracks.
+- Print orientation: standing on the rear band needs the fewest supports, but then the tongue's layers run across its bend and it can snap along a layer line. Printing it lying on its side is stronger but needs supports. Ask the makerspace staff, or set `TONGUE_THICK` to 1.6 for an upright print.
 
 ![v1](preview/v1_views.png)
 

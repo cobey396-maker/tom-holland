@@ -8,14 +8,15 @@
 - **Layout order:** nozzles at the hand end → screen in the middle → capsule behind. Kept exactly.
 - **Everything on one low spine** on top of the wrist. Kept.
 - **Round screen**, which fits the look. Kept, sized for a real 1.28" round display.
-- **Two buttons near the palm.** Kept, on a palm pad.
+- **Two buttons near the palm, attached to the band.** Kept.
 
 ## What had to change
 | Early prototype | Problem | v1 |
 |---|---|---|
 | Band is 33 × 25 mm inside | A real wrist is ~62 × 45 mm; this would fit a finger, not a wrist | Sized from `WRIST_WIDTH/HEIGHT` parameters |
 | Closed ring | Can't slide over your hand (knuckles are ~85 mm wide) | Two slim C-bands open underneath, one strap each |
-| Buttons on rigid prongs across the wrist joint | A rigid link locks the wrist so it can't bend | Two-button palm pad on an elastic hand loop, connected by a thin flexible cable |
+| Buttons on rigid prongs across the wrist joint | A rigid link locks the wrist so it can't bend | Buttons stay attached, on a thin **flexible tongue** printed as part of the band that bends with the wrist |
+| Closed ring | (see above) | Opening moved to the pinky side so the palm side can carry the tongue |
 | No nozzles | | Nozzles end flush at the front band, behind the wrist joint, so they never block the hand |
 | Capsule ~12 × 18 mm (~1.4 mL) | Simulator: ~0.4 s of string per refill | Two 14 × 60 mm capsules (~6.8 mL each): ~2 s / ~12 m of string with a piston |
 | Screen disc ~18 mm | Smallest real round displays are ~23 mm; electronics also need space | 40 mm boss: 36 mm display on top, ESP32 + battery underneath |

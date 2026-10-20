@@ -17,12 +17,13 @@ import cadquery as cq
 WRIST_WIDTH = 62
 WRIST_HEIGHT = 45
 
-# two slim C-shaped bands, open on the side opposite the pod so they slip on,
-# each closed with one strap. The front band sits just behind the wrist joint.
+# two slim C-shaped bands, open on the pinky side so they slip on, each closed with one
+# strap. The front band sits just behind the wrist joint; the palm trigger hangs off it.
 CUFF_WALL = 2.4
 FRONT_BAND = 28
 REAR_BAND = 20
-CUFF_GAP = 34             # opening on the far side
+CUFF_GAP = 34             # opening on the side (+X); flip GAP_SIDE for the other arm
+GAP_SIDE = 1
 STRAP_WIDTH = 20
 STRAP_SLOT = 3.2
 
@@ -50,9 +51,13 @@ IMPACT_HOLE = 7.2
 POD_FLOOR = 2.0
 BUTTON_POCKET_DEPTH = 3.6     # 12 x 12 x 3.5 mm tactile switch body
 
-# palm pad: two buttons side by side in the palm, like the early prototype's two round tips.
-# Held by an elastic loop around the hand; a thin flexible cable runs back to the band,
-# so the wrist can still bend freely.
+# palm trigger: two buttons side by side in the palm, like the early prototype's two round
+# tips. Printed as part of the front band on a thin flexible tongue that bends with the
+# wrist (print in PETG; PLA is too brittle for a flexing part). An elastic loop around the
+# hand keeps the pad against the palm.
+TONGUE_WIDTH = 12
+TONGUE_THICK = 1.2
+PAD_REACH = 40                # wrist band front edge -> center of the pad
 PALM_PAD = (48, 24, 7.5)      # length across the palm, width, thickness
 PALM_BUTTON = 12.3            # 12 mm tactile switches
 BUTTON_SPACING = 20
@@ -80,17 +85,23 @@ def wearer_hollow(length):
 
 
 def band(z0, length):
+    import math
     a, b = WRIST_WIDTH / 2, WRIST_HEIGHT / 2
     ring = (_ellipse(WRIST_WIDTH + 2 * CUFF_WALL, WRIST_HEIGHT + 2 * CUFF_WALL, length, z0)
             .cut(_ellipse(WRIST_WIDTH, WRIST_HEIGHT, length, z0)))
-    gap = (cq.Workplane("XY").box(CUFF_GAP, 20, length + 2, centered=(True, True, False))
-           .translate((0, -b - 5, z0 - 1)))
+    gap = (cq.Workplane("XY").box(20, CUFF_GAP, length + 2, centered=(True, True, False))
+           .translate((GAP_SIDE * (a + 5), 0, z0 - 1)))
     ring = ring.cut(gap)
-    # one strap slot on each side, next to the opening
+    # one strap slot on each side of the opening, cut square to the wall
+    edge = math.asin(min(1.0, CUFF_GAP / 2 / b))
     strap = min(STRAP_WIDTH, length - 6)
-    for side in (-1, 1):
+    for sign in (-1, 1):
+        t = sign * (edge + math.radians(16))
+        x, y = GAP_SIDE * a * math.cos(t), b * math.sin(t)
+        normal = math.degrees(math.atan2(a * math.sin(t), GAP_SIDE * b * math.cos(t)))
         slot = (cq.Workplane("XY").box(12, STRAP_SLOT, strap + 1)
-                .translate((side * (a - 2), -b * 0.45, z0 + length / 2)))
+                .rotate((0, 0, 0), (0, 0, 1), normal)
+                .translate((x, y, z0 + length / 2)))
         ring = ring.cut(slot)
     return ring
 
@@ -154,7 +165,7 @@ def pod():
 
 
 def palm_pad():
-    """Two-button palm pad: FIRE (tap = impact, hold = string) and TETHER."""
+    """Two-button pad: FIRE (tap = impact, hold = string) and TETHER. Buttons face +Z."""
     l, w, t = PALM_PAD
     pad = (cq.Workplane("XY").slot2D(l, w).extrude(t)
            .edges(">Z").fillet(2.2))
@@ -183,15 +194,21 @@ def palm_pad():
     return pad
 
 
-def cable_clip():
-    """Snaps onto the front band's edge to hold the palm cable."""
-    return (cq.Workplane("XY").box(10, 8, 4).cut(cq.Workplane("XY").box(10.2, CUFF_WALL + 0.3, 2.6)
-                                                  .translate((0, 0, -0.8)))
-            .cut(cq.Workplane("XY").box(CABLE[0] + 0.4, 9, CABLE[1] + 0.3).translate((0, 0, 1.2))))
+def palm_trigger():
+    """Flexible tongue from the underside of the front band to the two-button pad."""
+    under = -(WRIST_HEIGHT / 2 + CUFF_WALL)            # outside of the band, palm side
+    z_end = FRONT_BAND - 4                              # bonded to the band along most of its length
+    tongue = (cq.Workplane("XY").box(TONGUE_WIDTH, TONGUE_THICK + 0.6, z_end + PAD_REACH,
+                                     centered=(True, False, False))
+              .translate((0, under - TONGUE_THICK, -PAD_REACH)))
+    # pad built with buttons facing +Z; turn it so they face away from the palm (-Y)
+    pad = (palm_pad().rotate((0, 0, 0), (1, 0, 0), 90)
+           .translate((0, under - TONGUE_THICK + 0.01, -PAD_REACH)))
+    return tongue.union(pad)
 
 
 def unit():
-    return cuff().union(pod())
+    return cuff().union(pod()).union(palm_trigger())
 
 
 def capsule_placeholder():
@@ -202,11 +219,6 @@ def main():
     u = unit()
     (OUT / "stl").mkdir(exist_ok=True)
     cq.exporters.export(u, str(OUT / "stl" / "v1_wrist_unit.stl"), tolerance=0.05)
-    pad = palm_pad()
-    cq.exporters.export(pad, str(OUT / "stl" / "v1_palm_pad.stl"), tolerance=0.05)
-    cq.exporters.export(cable_clip(), str(OUT / "stl" / "v1_cable_clip.stl"), tolerance=0.05)
-    pb = pad.val().BoundingBox()
-    print(f"palm pad: {pb.xlen:.0f} x {pb.ylen:.0f} x {pb.zlen:.1f} mm, valid={pad.val().isValid()}")
     bb = u.val().BoundingBox()
     deck = WRIST_HEIGHT / 2 + CUFF_WALL
     print(f"wrist unit: {bb.xlen:.0f} x {bb.ylen:.0f} x {bb.zlen:.0f} mm, "
