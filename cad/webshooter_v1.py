@@ -16,9 +16,11 @@ from pathlib import Path
 import cadquery as cq
 
 # ------------------------------------------------------------------ PARAMETERS (mm)
-# wrist (measure over your sleeve, ~3 cm back from the wrist bone)
-WRIST_WIDTH = 62
-WRIST_HEIGHT = 45
+# wrist: inside of the band. From a 6 in (152 mm) wrist circumference, assuming a
+# typical oval (width ~1.37x height): skin ~56 x 41 mm, plus ~1.25 mm clearance all round.
+# Print stl/v1_fit_ring.stl first to check before the full print.
+WRIST_WIDTH = 58
+WRIST_HEIGHT = 43
 
 # two slim C-shaped bands, open on the pinky side so they slip on, each closed with one
 # strap. The front band sits just behind the wrist joint; the palm trigger hangs off it.
@@ -227,6 +229,8 @@ def main():
     u = unit()
     (OUT / "stl").mkdir(exist_ok=True)
     cq.exporters.export(u, str(OUT / "stl" / "v1_wrist_unit.stl"), tolerance=0.05)
+    # cheap fit test: a 10 mm slice of the front band, prints in ~15 minutes
+    cq.exporters.export(band(0, 10), str(OUT / "stl" / "v1_fit_ring.stl"), tolerance=0.05)
     bb = u.val().BoundingBox()
     deck = WRIST_HEIGHT / 2 + CUFF_WALL
     print(f"wrist unit: {bb.xlen:.0f} x {bb.ylen:.0f} x {bb.zlen:.0f} mm, "

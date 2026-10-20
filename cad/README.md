@@ -5,6 +5,8 @@
 [`webshooter_v1.py`](webshooter_v1.py), based on the [early Tinkercad prototype](reference/README.md). A low spine on two slim C-bands: nozzles + valves at the wrist, a round 1.28" screen with the electronics underneath, and twin capsules behind.
 
 - `stl/v1_wrist_unit.stl`: the whole thing, **one print**: bands, pod and palm trigger
+- `stl/v1_fit_ring.stl`: a 10 mm slice of the band. **Print this first** (~15 min) to check the fit, then adjust `WRIST_WIDTH`/`WRIST_HEIGHT` by a millimeter or two if needed
+- Sized for a 6 in (152 mm) wrist: band inside is 58 × 43 mm
 - **Worn on the inner wrist**, like the comics: the shooter and the palm trigger are on the same side. Fire with your hand bent back (the classic thwip pose), so your palm swings out of the jet's path.
 - **Palm trigger built in:** a thin flexible tongue runs from the underside of the front band to a two-button pad in your palm: **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). The tongue bends with your wrist like a spring (a *compliant mechanism*), so the buttons are part of the band without locking the wrist. An elastic loop through the pad's end slots keeps it against your palm.
 - The bands open on the **pinky side** (set `GAP_SIDE = -1` for the other arm), so the palm side is solid for the tongue.
