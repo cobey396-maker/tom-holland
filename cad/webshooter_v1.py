@@ -62,7 +62,10 @@ BUTTON_POCKET_DEPTH = 3.6     # 12 x 12 x 3.5 mm tactile switch body
 # hand keeps the pad against the palm.
 TONGUE_WIDTH = 12
 TONGUE_THICK = 1.2
-PAD_REACH = 40                # wrist band front edge -> center of the pad
+WRIST_CREASE_TO_PALM = 76     # measured: wrist crease -> center of the palm (3 in)
+BAND_BEHIND_CREASE = 8        # front band edge sits this far behind the crease
+PAD_REACH = WRIST_CREASE_TO_PALM + BAND_BEHIND_CREASE   # band front edge -> pad center
+HAND_WIDTH = 89               # measured across the knuckles (3.5 in); sets the elastic loop
 PALM_PAD = (48, 24, 7.5)      # length across the palm, width, thickness
 PALM_BUTTON = 12.3            # 12 mm tactile switches
 BUTTON_SPACING = 20

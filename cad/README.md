@@ -6,7 +6,9 @@
 
 - `stl/v1_wrist_unit.stl`: the whole thing, **one print**: bands, pod and palm trigger
 - `stl/v1_fit_ring.stl`: a 10 mm slice of the band. **Print this first** (~15 min) to check the fit, then adjust `WRIST_WIDTH`/`WRIST_HEIGHT` by a millimeter or two if needed
-- Sized for a 6 in (152 mm) wrist: band inside is 58 × 43 mm
+- Sized for a 6 in (152 mm) wrist: band inside is 58 × 43 mm. Trigger tongue reaches 84 mm from the band to the pad (3 in from the wrist crease to the palm center, plus 8 mm because the band sits behind the crease)
+- **Elastic loop:** ½ in wide elastic, cut about 7 in. Thread it through both pad slots and around the back of your hand (3.5 in across the knuckles), overlap the ends about ½ in and sew or knot them. Shorten until the pad sits snug without pinching
+- Overall length is now 220 mm. Check that it fits the makerspace printer's build height if printed standing up; otherwise print it on its side
 - **Worn on the inner wrist**, like the comics: the shooter and the palm trigger are on the same side. Fire with your hand bent back (the classic thwip pose), so your palm swings out of the jet's path.
 - **Palm trigger built in:** a thin flexible tongue runs from the underside of the front band to a two-button pad in your palm: **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). The tongue bends with your wrist like a spring (a *compliant mechanism*), so the buttons are part of the band without locking the wrist. An elastic loop through the pad's end slots keeps it against your palm.
 - The bands open on the **pinky side** (set `GAP_SIDE = -1` for the other arm), so the palm side is solid for the tongue.
