@@ -6,7 +6,7 @@
 
 ## What's good (kept in v1)
 - **Layout order:** nozzles at the hand end → screen in the middle → capsule behind. Kept exactly.
-- **Everything on one low spine** on top of the wrist. Kept.
+- **Everything on one low spine.** Kept, but moved to the inner (palm side) wrist so the shooter sits on the same side as the palm buttons, like the comics.
 - **Round screen**, which fits the look. Kept, sized for a real 1.28" round display.
 - **Two buttons near the palm, attached to the band.** Kept.
 
@@ -23,4 +23,4 @@
 | No room for valves or wiring | | Valve pocket in the front block, wire channel under the screen |
 
 ## Honest trade-off
-v1 is **16 mm tall** above the band (the early prototype was ~8 mm) and **124 mm long**. That's what real capsules, a real screen and real valves need. The biggest knob is `CAPSULE_LENGTH`: shorter means a smaller unit but less string per refill.
+v1 is **16 mm tall** off the wrist (the early prototype was ~8 mm) and **124 mm long**. That's what real capsules, a real screen and real valves need. The biggest knob is `CAPSULE_LENGTH`: shorter means a smaller unit but less string per refill.

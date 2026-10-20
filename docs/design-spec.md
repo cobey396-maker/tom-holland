@@ -31,6 +31,10 @@ To get ~1 N (roughly what tips a full soda can) with a water-like fluid:
 - **Tap = impact shot:** short, wide burst
 - **Hold = string mode:** thin coaxial strand, valve closes on release
 
+## Wearing it
+Shooter on the **inner wrist** (palm side), same side as the palm trigger. Fire with the hand bent back (thwip pose): with the wrist straight, your own palm and the trigger pad are in the jet's path.
+- **Planned safety interlock:** a tiny motion sensor in the palm pad plus one in the pod lets the firmware measure the wrist angle and only fire when the hand is bent back.
+
 ## Proposed architecture
 - Two small capsules (core fluid + sheath fluid), pressurized with air to ≤ 30–40 psi, with a pressure-relief valve
 - **Pinch valves** on silicone tubing (fluid never touches the valve → fewer clogs), driven by the ESP32

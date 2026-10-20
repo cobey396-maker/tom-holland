@@ -6,8 +6,11 @@ behind -- resized around real parts and a real wrist.
 
     python webshooter_v1.py
 
-Axes: X = across the wrist, Y = up (away from the skin), Z = along the forearm
-(Z = 0 is the hand end).
+Worn on the inner (palm side) wrist like the comics: shooter and palm trigger on the
+same side. Fire with the hand bent back so the palm swings out of the jet's path.
+
+Axes: X = across the wrist, Y = toward the back of the hand (the shooter is on -Y, the
+palm side), Z = along the forearm (Z = 0 is the hand end).
 """
 from pathlib import Path
 import cadquery as cq
@@ -207,8 +210,13 @@ def palm_trigger():
     return tongue.union(pad)
 
 
+def shooter():
+    """The pod, placed on the palm side of the wrist (mirror of the pod built on +Y)."""
+    return pod().mirror("XZ")
+
+
 def unit():
-    return cuff().union(pod()).union(palm_trigger())
+    return cuff().union(shooter()).union(palm_trigger())
 
 
 def capsule_placeholder():
@@ -222,7 +230,7 @@ def main():
     bb = u.val().BoundingBox()
     deck = WRIST_HEIGHT / 2 + CUFF_WALL
     print(f"wrist unit: {bb.xlen:.0f} x {bb.ylen:.0f} x {bb.zlen:.0f} mm, "
-          f"{bb.ymax - deck:.1f} mm tall above the cuff, {u.val().Volume() / 1000:.1f} cm^3, "
+          f"{-bb.ymin - deck:.1f} mm tall off the inner wrist, {u.val().Volume() / 1000:.1f} cm^3, "
           f"valid={u.val().isValid()}, solids={len(u.solids().vals())}")
 
 

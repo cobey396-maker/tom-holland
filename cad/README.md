@@ -5,9 +5,10 @@
 [`webshooter_v1.py`](webshooter_v1.py), based on the [early Tinkercad prototype](reference/README.md). A low spine on two slim C-bands: nozzles + valves at the wrist, a round 1.28" screen with the electronics underneath, and twin capsules behind.
 
 - `stl/v1_wrist_unit.stl`: the whole thing, **one print**: bands, pod and palm trigger
+- **Worn on the inner wrist**, like the comics: the shooter and the palm trigger are on the same side. Fire with your hand bent back (the classic thwip pose), so your palm swings out of the jet's path.
 - **Palm trigger built in:** a thin flexible tongue runs from the underside of the front band to a two-button pad in your palm: **FIRE** (flush; tap = impact, hold = string) and **TETHER** (recessed with a raised ring, so you find it by feel and don't press it by accident). The tongue bends with your wrist like a spring (a *compliant mechanism*), so the buttons are part of the band without locking the wrist. An elastic loop through the pad's end slots keeps it against your palm.
 - The bands open on the **pinky side** (set `GAP_SIDE = -1` for the other arm), so the palm side is solid for the tongue.
-- 16 mm tall above the band, ~64 cm³ of plastic
+- 16 mm tall off the inner wrist, ~64 cm³ of plastic
 - **Print in PETG**, not PLA: the tongue flexes every time you bend your wrist, and PLA cracks.
 - Print orientation: standing on the rear band needs the fewest supports, but then the tongue's layers run across its bend and it can snap along a layer line. Printing it lying on its side is stronger but needs supports. Ask the makerspace staff, or set `TONGUE_THICK` to 1.6 for an upright print.
 
